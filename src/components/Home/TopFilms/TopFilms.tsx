@@ -1,14 +1,14 @@
 import {Card, Col, Empty, Image, Pagination, Radio, Row, Typography} from "antd";
 import React, {memo, useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {
+    selectFilmType,
     selectIsFetching,
     selectTopFilms,
     selectTopFilmsError,
     selectTotalPages
 } from "../../../app/selectors/homePageSelector";
-import {getTopFilms} from "../../../app/homePage";
+import {getTopFilms, setFilmType} from "../../../app/homePage";
 import {RadioChangeEvent} from "antd/lib";
 import {TopFilmsQueryType} from "../../../api/api";
 import {useNavigate} from "react-router-dom";
@@ -16,10 +16,11 @@ import {useNavigate} from "react-router-dom";
 const {Title, Paragraph, Text} = Typography;
 
 export const TopFilms = memo(() => {
-    const [filmType, setFilmType] = useState<TopFilmsQueryType>("TOP_AWAIT_FILMS");
+    //const [filmType, setFilmType] = useState<TopFilmsQueryType>("TOP_AWAIT_FILMS");
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
 
+    const filmType = useAppSelector(selectFilmType);
     const films = useAppSelector(selectTopFilms);
     let totalPages = useAppSelector(selectTotalPages);
     const isFetching = useAppSelector(selectIsFetching);
@@ -29,7 +30,7 @@ export const TopFilms = memo(() => {
         totalPages = 20;
     }
 
-    const dispatch = useDispatch()<any>;
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(getTopFilms({filmType, currentPage}));
@@ -37,12 +38,12 @@ export const TopFilms = memo(() => {
 
     const changeFilter = (value: TopFilmsQueryType) => {
         setCurrentPage(1);
-        setFilmType(value);
+        dispatch(setFilmType(value));
     }
 
     return (
         <div style={{display: "flex", flexDirection: "column"}}>
-            <Radio.Group defaultValue={'TOP_AWAIT_FILMS'} disabled={isFetching}
+            <Radio.Group defaultValue={filmType} disabled={isFetching}
                          onChange={(e: RadioChangeEvent) => changeFilter(e.target.value)}
                          style={{marginBottom: '20px'}}>
                 <Radio.Button value={'TOP_250_BEST_FILMS'}>Топ 250</Radio.Button>

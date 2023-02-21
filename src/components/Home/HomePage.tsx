@@ -3,11 +3,11 @@ import "./Home.css"
 import {TopFilms} from "./TopFilms/TopFilms";
 import {Premieres} from "./Premieres/Premieres";
 import {changeCurrentPage} from "../../app/appInit";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../app/store";
 
 
 export const HomePage = React.memo(() => {
-    const dispatch = useDispatch<any>();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(changeCurrentPage('home'));

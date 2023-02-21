@@ -6,16 +6,11 @@ import {useAppDispatch, useAppSelector} from "../../app/store";
 import {selectFilms} from "../../app/selectors/filmsPageSelector";
 import {useNavigate} from "react-router-dom";
 import Title from "antd/lib/typography/Title";
-import {Card, Col, Image, Row, Spin} from "antd";
-import {Button, Radio, Space, Divider} from 'antd';
-import {SizeType} from "antd/es/config-provider/SizeContext";
-import {useDispatch} from "react-redux";
+import {Col, Radio, Row, Spin} from "antd";
 import {changeCurrentPage} from "../../app/appInit";
 
-const {Meta} = Card;
 
-
-export const FilmsPage: FC = React.memo(() => {
+const FilmsPage: FC = React.memo(() => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [fetching, setFetching] = useState(true);
@@ -102,3 +97,5 @@ const Cards: FC<PropsType> = React.memo(({film}) => {
 type PropsType = {
     film: FilmType
 }
+
+export default FilmsPage

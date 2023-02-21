@@ -1,20 +1,14 @@
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {dataAPI} from "../api/api";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {dataAPI, FilmsFullType} from "../api/api";
 import {FilmType} from "../types/types";
 
 
-export const getFilms = createAsyncThunk<any, argsType, any>(
+export const getFilms = createAsyncThunk<FilmsFullType, argsType>(
     'filmsPage/getFilms',
     async (args) => {
         return await dataAPI.getFilms(args.genres, args.page);
     },
 )
-
-
-type argsType = {
-    genres: number | null
-    page: number
-}
 
 const initialState = {
     films: [] as Array<FilmType>,
@@ -35,7 +29,7 @@ export const filmsSlice = createSlice({
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
-        builder.addCase(getFilms.fulfilled, (state: StateType, action) => {
+        builder.addCase(getFilms.fulfilled, (state, action) => {
             // Add user to the state array
             if (state.mode) {
                 state.films = action.payload.items;
@@ -53,3 +47,8 @@ export const {changeMode} = filmsSlice.actions
 export default filmsSlice.reducer
 
 type StateType = typeof initialState
+
+type argsType = {
+    genres: number | null
+    page: number
+}

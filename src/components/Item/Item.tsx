@@ -1,12 +1,15 @@
 import React, {FC, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {getCurrentFilm, getCurrentFilmImages, getCurrentFilmTeaser} from "../../app/filmsProfile";
+import {getCurrentFilm, getCurrentFilmImages} from "../../app/filmsProfile";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {selectFilm} from "../../app/selectors/filmProfileSelector";
+import {
+    selectFilm,
+    selectFilmImages, selectFilmIsFetching,
+    selectFilmTotalPages
+} from "../../app/selectors/filmProfileSelector";
 import {changeCurrentPage} from "../../app/appInit";
-import {Card, Col, Empty, Image, Pagination, Row, Spin, Typography} from "antd";
+import {Col, Empty, Image, Pagination, Row, Spin, Typography} from "antd";
 import './Item.scss'
-import {useDispatch} from "react-redux";
 
 const {Title, Paragraph, Text} = Typography;
 
@@ -15,10 +18,10 @@ export const Item: FC = React.memo(() => {
     const {filmId} = useParams();
 
     const currentFilm = useAppSelector(selectFilm);
-    const teasers = useAppSelector(state => state.filmsProfile.teasers);
-    const images = useAppSelector(state => state.filmsProfile.images);
-    const totalPages = useAppSelector(state => state.filmsProfile.totalPages);
-    const isFetching = useAppSelector(state => state.filmsProfile.isFetching);
+    //const teasers = useAppSelector(selectFilmTeasers);
+    const images = useAppSelector(selectFilmImages);
+    const totalPages = useAppSelector(selectFilmTotalPages);
+    const isFetching = useAppSelector(selectFilmIsFetching);
 
     const dispatch = useAppDispatch();
 
@@ -78,17 +81,16 @@ export const Item: FC = React.memo(() => {
                     </Paragraph>
                 </Col>
             </Row>
-            <div className="">
-                {teasers[0] &&
-                    'da'
-                    // <iframe src={`https://youtube.com/embed/_nsfVZcCqnY`}
-                    // allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    // allowFullScreen
-                    // title="Embedded youtube"
-                    // >
-                    // </iframe>
-                }
-            </div>
+            {/*<div className="">*/}
+            {/*    {teasers[0] &&*/}
+            {/*        <iframe src={`https://youtube.com/embed/_nsfVZcCqnY`}*/}
+            {/*        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
+            {/*        allowFullScreen*/}
+            {/*        title="Embedded youtube"*/}
+            {/*        >*/}
+            {/*        </iframe>*/}
+            {/*    }*/}
+            {/*</div>*/}
             <div>
                 <Title level={3}>Кадры из фильма:</Title>
                 {!images.length ? <Empty description={'Not images'}/>

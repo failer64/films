@@ -12,3 +12,5 @@ export const selectIsFetching= (state: RootState) =>
     state.homePage.isFetching
 export const selectTopFilmsError = (state: RootState) =>
     state.homePage.errorOfTopFilms
+export const selectFilmType = (state: RootState) =>
+    state.homePage.filmType

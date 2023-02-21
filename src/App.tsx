@@ -1,15 +1,18 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {Link, Outlet, Route, Routes} from "react-router-dom";
 import './App.scss'
 import {HomePage} from './components/Home/HomePage'
-import {FilmsPage} from './components/Content/Content'
-import {Item} from './components/Item/Item'
 import type {MenuProps} from 'antd';
 import {Layout, Menu} from 'antd';
 import {HomeOutlined} from '@ant-design/icons';
 import {useAppSelector} from "./app/store";
 import {useDispatch} from "react-redux";
 import {changeCurrentPage} from "./app/appInit";
+import {Item} from "./components/Item/Item";
+import FilmsPage from "./components/Content/Content";
+
+//const FilmsPage = React.lazy(() => import('./components/Content/Content'));
+//const ItemPage = React.lazy(() => import('./components/Item/Item'));
 
 const {Header, Content, Footer} = Layout;
 
@@ -49,12 +52,13 @@ const AntdLayout: FC = () => {
     ]
 
     const onClick: MenuProps['onClick'] = (e) => {
+        //@ts-ignore
         dispatch(changeCurrentPage(e.key));
     }
 
     return (
         <Layout style={{minHeight: '100vh'}}>
-            <Header style={{position: 'sticky', top: 0, zIndex: 1, width: '100%', backgroundColor: "#fff"}}>
+            <Header style={{position: 'sticky', top: 0, zIndex: 100, width: '100%', backgroundColor: "#fff"}}>
                 <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
             </Header>
             <Content>

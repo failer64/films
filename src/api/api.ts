@@ -14,7 +14,7 @@ export const dataAPI = {
     },
     getFilms(genres: number | null, page: number = 1) {
         //return (instance.get(`?genres=${genres}&page=${page}`).then(response => response.data));
-        return (instance.get(`?page=${page}` + (genres !== null ? `&genres=${genres}` : '')))
+        return (instance.get<FilmsFullType>(`?page=${page}` + (genres !== null ? `&genres=${genres}` : '')))
             .then(response => response.data);
     },
     getTopFilms(filmType: TopFilmsQueryType, page: number = 1) {
@@ -85,6 +85,12 @@ export type TopFilmsQueryType = 'TOP_250_BEST_FILMS' | 'TOP_100_POPULAR_FILMS' |
 
 export type ImagesType = {
     items: Array<{ imageUrl: string, previewUrl: string }>
+    total: number
+    totalPages: number
+}
+
+export type FilmsFullType = {
+    items: FilmType[]
     total: number
     totalPages: number
 }
