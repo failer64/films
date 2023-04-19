@@ -8,26 +8,27 @@ import {useNavigate} from "react-router-dom";
 import Title from "antd/lib/typography/Title";
 import {Col, Radio, Row, Spin} from "antd";
 import {changeCurrentPage} from "../../app/appInit";
+import {RadioChangeEvent} from "antd/lib";
 
 
 const FilmsPage: FC = React.memo(() => {
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [fetching, setFetching] = useState(true);
+    const [isFetching, setIsFetching] = useState(true);
     //const [totalPages, setTotalPages] = useState(0);
-    const [genres, setGenres] = useState(null as null | number);
+    const [genres, setGenres] = useState(1);
 
     const films = useAppSelector(selectFilms);
 
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (fetching && currentPage < 6) {
+        if (isFetching && currentPage < 6) {
             dispatch(getFilms({genres, page: currentPage}));
             setCurrentPage(prevState => prevState + 1);
-            setFetching(false);
+            setIsFetching(false);
         }
-    }, [fetching, genres])
+    }, [isFetching, genres])
 
 
     useEffect(() => {
@@ -43,7 +44,7 @@ const FilmsPage: FC = React.memo(() => {
 
     const scrollHandler = (e: any) => {
         if (e.target.documentElement.scrollHeight - (window.innerHeight + e.target.documentElement.scrollTop) < 100 && films.length <= 40) {
-            setFetching(true);
+            setIsFetching(true);
         }
     }
 
@@ -51,22 +52,26 @@ const FilmsPage: FC = React.memo(() => {
         dispatch(changeMode());
         setCurrentPage(1);
         setGenres(value);
-        setFetching(true);
+        setIsFetching(true);
     }
 
     if (!films) return <Spin size={'large'} tip={'Loading'}/>
 
     return (<>
         <Title>Каталог фильмов:</Title>
-        <Radio.Group onChange={(e) => changeGenre(e.target.value)} style={{marginBottom: '20px'}}>
-            <Radio.Button value={1}>Драма</Radio.Button>
-            <Radio.Button value={2}>Криминал</Radio.Button>
-            <Radio.Button value={3}>Сброс</Radio.Button>
+        <Radio.Group defaultValue={genres} onChange={(e) => changeGenre(e.target.value)}
+                     disabled={isFetching} style={{marginBottom: '20px'}}>
+            <Radio.Button value={1}>Триллер</Radio.Button>
+            <Radio.Button value={2}>Драма</Radio.Button>
+            <Radio.Button value={3}>Криминал</Radio.Button>
+            <Radio.Button value={4}>Мелодрама</Radio.Button>
+            <Radio.Button value={5}>Детектив</Radio.Button>
         </Radio.Group>
-        <Row gutter={[16, 16]}>
+
+        <Row gutter={[{sm: 8, md: 16, xl: 24}, {xs: 16, sm: 16, xl: 24}]}>
             {
                 films.map((f, index: number) =>
-                    <Col key={index} span={6}>
+                    <Col key={index} lg={{span: 6}} md={{span: 8}} sm={{span: 12}}>
                         <Cards key={index} film={f}/>
                     </Col>
                 )

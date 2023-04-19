@@ -49,6 +49,6 @@ export default filmsSlice.reducer
 type StateType = typeof initialState
 
 type argsType = {
-    genres: number | null
+    genres: number
     page: number
 }

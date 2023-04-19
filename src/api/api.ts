@@ -12,10 +12,8 @@ export const dataAPI = {
     getCurrentFilm(id: number = 1) {
         return (instance.get<FilmType>(`${id}`).then(response => response.data));
     },
-    getFilms(genres: number | null, page: number = 1) {
-        //return (instance.get(`?genres=${genres}&page=${page}`).then(response => response.data));
-        return (instance.get<FilmsFullType>(`?page=${page}` + (genres !== null ? `&genres=${genres}` : '')))
-            .then(response => response.data);
+    getFilms(genres: number = 1, page: number = 1) {
+        return (instance.get<FilmsFullType>(`?page=${page}` + `&genres=${genres}`)).then(response => response.data);
     },
     getTopFilms(filmType: TopFilmsQueryType, page: number = 1) {
         return (instance.get<TopFilmsFullType>(`top?page=${page}&type=${filmType}`).then(response => response.data));
