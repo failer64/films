@@ -78,7 +78,7 @@ const CardItem: FC<PropsType> = ({item, isFetching}) => {
                             preview={false}/>}>
             <Title level={5}>{item.nameRu || item.nameEn}</Title>
             <Paragraph strong>{item.rating}</Paragraph>
-            <Paragraph type={'danger'}>{item.year}</Paragraph>
+            <Paragraph type={'success'}>{item.year}</Paragraph>
             <Paragraph italic>{item.genres.map(f => f.genre + ' ')}</Paragraph>
             <Text type={"secondary"}>{item.countries.map(f => f.country + ' ')}</Text>
         </Card>
