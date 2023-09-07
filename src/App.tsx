@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {FC} from 'react';
 import {Link, Outlet, Route, Routes} from "react-router-dom";
 import './App.scss'
@@ -10,12 +11,30 @@ import {useDispatch} from "react-redux";
 import {changeCurrentPage} from "./app/appInit";
 import {Item} from "./components/Item/Item";
 import FilmsPage from "./components/Content/Content";
+=======
+import { lazy } from 'react';
+import { Link, Outlet, Route, Routes } from "react-router-dom";
+import './App.scss'
+import { HomePage } from './components/Home/HomePage'
+import type { MenuProps } from 'antd';
+import { Layout, Menu } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
+import { useAppSelector } from "./app/store";
+import { useDispatch } from "react-redux";
+import { changeCurrentPage } from "./app/appInit";
+import Item from "./components/Item";
+import FilmsPage from "./components/FilmsPage/";
+>>>>>>> 38fc720 (refactoring)
 
-//const FilmsPage = React.lazy(() => import('./components/Content/Content'));
+// const FilmsPage = lazy(() =>
+// 	import('./components/FilmsPage')
+// 		.then(({ FilmsPage }) => ({ default: FilmsPage })),
+// );
 //const ItemPage = React.lazy(() => import('./components/Item/Item'));
 
 const {Header, Content, Footer} = Layout;
 
+<<<<<<< HEAD
 export const App: FC = () => {
     return (
         <>
@@ -34,6 +53,26 @@ export const App: FC = () => {
 const AntdLayout: FC = () => {
     const current = useAppSelector(state => state.mainApp.currentPage);
     const dispatch = useDispatch<any>();
+=======
+export const App = () => {
+	return (
+		<>
+			<Routes>
+				<Route path={'/'} element={<AntdLayout />}>
+					<Route index path={'/'} element={<HomePage />} />
+					<Route path={'films'} element={<FilmsPage />} />
+					<Route path={'film/:filmId'} element={<Item />} />
+					<Route path={'*'} element={<div>404</div>} />
+				</Route>
+			</Routes>
+		</>
+	)
+}
+
+const AntdLayout = () => {
+	const current = useAppSelector(state => state.mainApp.currentPage);
+	const dispatch = useDispatch<any>();
+>>>>>>> 38fc720 (refactoring)
 
     const items: MenuProps['items'] = [
         {

@@ -1,21 +1,41 @@
+<<<<<<< HEAD:src/components/Item/Item.tsx
 import React, {FC, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {getCurrentFilm, getCurrentFilmImages} from "../../app/filmsProfile";
 import {useAppDispatch, useAppSelector} from "../../app/store";
+=======
+import { memo, FC, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getCurrentFilm, getCurrentFilmImages } from "../../app/filmsProfile";
+import { useAppDispatch, useAppSelector } from "../../app/store";
+>>>>>>> 38fc720 (refactoring):src/components/Item/index.tsx
 import {
     selectFilm,
     selectFilmImages, selectFilmIsFetching,
     selectFilmTotalPages
 } from "../../app/selectors/filmProfileSelector";
+<<<<<<< HEAD:src/components/Item/Item.tsx
 import {changeCurrentPage} from "../../app/appInit";
 import {Col, Empty, Image, Pagination, Row, Spin, Typography} from "antd";
 import './Item.scss'
+=======
+import { changeCurrentPage } from "../../app/appInit";
+import { Col, Empty, Image, Pagination, Row, Spin, Typography } from "antd";
+import './index.scss'
+>>>>>>> 38fc720 (refactoring):src/components/Item/index.tsx
 
 const {Title, Paragraph, Text} = Typography;
 
+<<<<<<< HEAD:src/components/Item/Item.tsx
 export const Item: FC = React.memo(() => {
     const [currentPage, setCurrentPage] = useState(1);
     const {filmId} = useParams();
+=======
+
+const Item: FC = memo(() => {
+	const [currentPage, setCurrentPage] = useState(1);
+	const { filmId } = useParams();
+>>>>>>> 38fc720 (refactoring):src/components/Item/index.tsx
 
     const currentFilm = useAppSelector(selectFilm);
     //const teasers = useAppSelector(selectFilmTeasers);
@@ -113,3 +133,5 @@ export const Item: FC = React.memo(() => {
         </div>
     )
 })
+
+export default Item;
