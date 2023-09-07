@@ -3,6 +3,11 @@ import { dataAPI, FilmsFullType } from "../api/api";
 import { FilmType } from "../types/types";
 
 
+type GenresType = {
+	id: number
+	genre: string
+}
+
 export const getFilms = createAsyncThunk<FilmsFullType, argsType>(
 	'filmsPage/getFilms',
 	async (args) => {
@@ -10,10 +15,20 @@ export const getFilms = createAsyncThunk<FilmsFullType, argsType>(
 	},
 )
 
+export const getGenres = createAsyncThunk(
+	'filmsPage/getGenres',
+	async () => {
+		const data = await dataAPI.getGenres();
+		debugger
+		return data.genres.slice(0, 10);
+	},
+)
+
 const initialState = {
 	films: [] as Array<FilmType>,
 	isFetching: false,
 	genre: 1,
+	genres: [] as GenresType[]
 }
 
 export const filmsSlice = createSlice({
@@ -43,6 +58,9 @@ export const filmsSlice = createSlice({
 		}).addCase(getFilms.pending, (state) => {
 			// Add user to the state array
 			state.isFetching = true;
+		}).addCase(getGenres.fulfilled, (state, action) => {
+			// Add user to the state array
+			state.genres = action.payload;
 		})
 	},
 })

@@ -12,8 +12,17 @@ export const dataAPI = {
 	getCurrentFilm(id: number = 1) {
 		return (instance.get<FilmType>(`${id}`).then(response => response.data));
 	},
-	getFilms(genres: number = 1, page: number = 1) {
-		return (instance.get<FilmsFullType>(`?page=${page}` + `&genres=${genres}`)).then(response => response.data);
+	async getGenres() {
+		return (instance.get(`filters`)).then(response => response.data);
+	},
+	async getFilms(genre: number = 1, page: number = 1) {
+		//return (instance.get<FilmsFullType>(`?page=${page}` + `&genres=${genres}`)).then(response => response.data);
+		return axios<FilmsFullType>({
+			url: `https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=${genre}&page=${page}`,
+			headers: {
+				'X-API-KEY': 'a16e5ea3-7e40-47b8-a8dd-0a3e2a36e67d',
+			}
+		}).then(response => response.data);
 	},
 	getTopFilms(filmType: TopFilmsQueryType, page: number = 1) {
 		return (instance.get<TopFilmsFullType>(`top?page=${page}&type=${filmType}`).then(response => response.data));
@@ -24,7 +33,7 @@ export const dataAPI = {
 	getImages(id: number, page: number = 1) {
 		return (instance.get<ImagesType>(`${id}/images?page=${page}`).then(response => response.data));
 	},
-	getPremieres(year: number, month: string) {
+	async getPremieres(year: number, month: string) {
 		return (instance.get<PremieresFullType>(`/premieres?year=${year}` + (`&month=${month}`)))
 			.then(response => response.data);
 	},
