@@ -19,7 +19,7 @@ export const getGenres = createAsyncThunk(
 	'filmsPage/getGenres',
 	async () => {
 		const data = await dataAPI.getGenres();
-		debugger
+
 		return data.genres.slice(0, 10);
 	},
 )
